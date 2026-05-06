@@ -17,6 +17,18 @@ public class AppDbContext : DbContext
             .HasIndex(u => u.Email)
             .IsUnique();
 
+        modelBuilder.Entity<User>()
+            .Property(u => u.Balance)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Transaction>()
+            .Property(t => t.Amount)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Transfer>()
+            .Property(t => t.Amount)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<Transfer>()
             .HasOne(t => t.FromUser)
             .WithMany()
