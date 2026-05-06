@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization;
 using backend.Data;
+using backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,12 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod());
 });
 
-builder.Services.AddControllers();
+builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<TransactionsService>();
+builder.Services.AddScoped<TransfersService>();
+
+builder.Services.AddControllers().AddJsonOptions(opt =>
+    opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 var app = builder.Build();
 
